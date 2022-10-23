@@ -3,10 +3,10 @@ const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000
-app.use(express.static(__dirname + '/dist/digilib'));
+app.use(express.static(__dirname + '/dist/DIGILIB'));
 
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/dist/digilib/index.html'));
+    res.sendFile(path.join(__dirname + '/dist/DIGILIB/index.html'));
 });
 
 app.listen(port, () => {
