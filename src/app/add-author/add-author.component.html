@@ -1,0 +1,17 @@
+<div class="container">
+    <form #authorForm="ngForm" (ngSubmit)="onSubmit(authorForm)">
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label class="my-2">Author Name</label>
+                    <input type="text" name="authorName" class="form-control" [(ngModel)]="authorName" (ngModelChange)="onValidate()" required>
+                </div>
+            </div>
+            <div class="col-3 d-flex flex-row justify-content-start align-items-end">
+                <div class="form-group">
+                    <button class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

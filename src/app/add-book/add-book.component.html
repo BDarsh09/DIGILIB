@@ -1,0 +1,45 @@
+<div class="container">
+    <form #bookForm="ngForm" (ngSubmit)="onSubmit(bookForm)" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-5">
+                <div class="form-group">
+                    <label class="my-2">Title</label>
+                    <input type="text" name="title" class="form-control" [(ngModel)]="title" required>
+                </div>
+                <div class="form-group">
+                    <label class="my-2">Published Date</label>
+                    <input type="date" name="title" class="form-control" [(ngModel)]="publishedDate" required>
+                </div>
+                <div class="form-group">
+                    <label class="my-2">Example file input</label>
+                    <textarea class="form-control" name="fileInput" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="form-group">
+                    <label class="my-2">Author</label>
+                    <select name="author" class="form-control" (change)="onChangeAuthor($event)">
+                        <option *ngFor="let author of authors" [value]="author.name">{{author.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="my-2">Page Count</label>
+                    <input type="number" name="pageCount" class="form-control" [(ngModel)]="pageCount" required>
+                </div>
+                <div class="form-group">
+                    <label class="my-2">Description</label>
+                    <textarea class="form-control" name="description" [(ngModel)]="description" rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-5">
+                <button class="btn btn-success mt-3 me-3">Submit</button>
+                <button class="btn btn-info mt-3">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>
+
