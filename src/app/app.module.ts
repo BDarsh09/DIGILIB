@@ -10,6 +10,8 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { AddBookComponent } from './add-book/add-book.component';
 import { AddAuthorComponent } from './add-author/add-author.component';
 import { BooksComponent } from './books/books.component';
+import { SelectBookComponent } from './select-book/select-book.component';
+import { SelectAuthorComponent } from './select-author/select-author.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { BooksComponent } from './books/books.component';
     FilterPipe,
     AddBookComponent,
     AddAuthorComponent,
-    BooksComponent
+    BooksComponent,
+    SelectBookComponent,
+    SelectAuthorComponent
   ],
   imports: [
     BrowserModule,

@@ -5,36 +5,32 @@ const fs = require('fs')
 const Book = require('../models/books')
 const Author = require('../models/authors')
 
-const uploadPath = path.join('server', Book.coverImageBasePath)
-const imageMimeTypes = ['images/jpeg', 'images/png']
+// const uploadPath = path.join('server', Book.coverImageBasePath)
 const router = express.Router()
-const upload = multer({
-    dest: uploadPath,
-    fileFilter: (req, file, callback) => {
-        callback(null, imageMimeTypes.includes(file.mimetype))
-    }
-})
+// const upload = multer({
+//     dest: uploadPath
+// })
 
 // All Books Route
 router.get('/', async (req, res) => {
     try {
-        const books = await Book.find({})
-        const encoded = convertToBase64(books)
-        res.status(200).send(encoded)
+        const books = await Book.find({}).populate("author")
+        res.status(200).send(books)
     } catch (error) {
         res.status(400).send(error)
     }
 })
 
 // Create Books Route
-router.post('/', upload.single('cover') ,async (req, res) => {
-    const fileName = req.file != null ? req.file.filename : null
+router.post('/', async (req, res) => {
+    // const fileName = req.file != null ? req.file.filename : null    
+    const bookAuthor = await Author.findOne({ 'name': req.body.author })
     const book = new Book({
         title: req.body.title,
-        author: req.body.author,
+        author: bookAuthor,
         publishedDate: req.body.publishedDate,
         pageCount: req.body.pageCount,
-        coverImageName: fileName,
+        bookCover: req.body.bookCover,
         description: req.body.description
     })
     try {
@@ -46,6 +42,9 @@ router.post('/', upload.single('cover') ,async (req, res) => {
         }
         res.status(400).send(error)
     }
+})
+
+router.get('/:id', async(req, res) => {
 })
 
 function convertToBase64() {

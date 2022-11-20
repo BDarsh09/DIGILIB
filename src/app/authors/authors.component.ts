@@ -11,7 +11,6 @@ import _ from 'lodash'
 export class AuthorsComponent implements OnInit {
   public authors:any;
   public searchText: string = '';
-  private copyAuthors: any = []
   constructor(public authorService: AuthorsService) { }
 
   ngOnInit(): void {
@@ -21,7 +20,6 @@ export class AuthorsComponent implements OnInit {
   getAuthors() {
     this.authorService.getAuthors().pipe(take(1)).subscribe((authorsData) => {
       this.authors = _.cloneDeep(authorsData)
-      // this.copyAuthors = _.cloneDeep(this.authors)
     })
   }
 
