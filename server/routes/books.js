@@ -4,9 +4,9 @@ const path = require('path')
 const fs = require('fs')
 const Book = require('../models/books')
 const Author = require('../models/authors')
+const router = express.Router()
 
 // const uploadPath = path.join('server', Book.coverImageBasePath)
-const router = express.Router()
 // const upload = multer({
 //     dest: uploadPath
 // })
@@ -44,7 +44,57 @@ router.post('/', async (req, res) => {
     }
 })
 
+// Select Book Route
 router.get('/:id', async(req, res) => {
+    try {
+        const book = await Book.findById(req.params.id).populate('author')
+        res.status(200).send(book)
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
+
+// Update Book Route
+router.put('/:id', async(req, res) => {
+    let book
+    try {
+        book = await Book.findById(req.params.id)
+        const bookAuthor = await Author.findOne({ 'name': req.body.author })
+        book.title = req.body.title,
+        book.author = bookAuthor
+        book.publishedDate = new Date(req.body.publishedDate),
+        book.pageCount = req.body.pageCount,
+        book.bookCover = req.body.bookCover,
+        book.description = req.body.description
+        await book.save()
+        res.status(200).send({
+            success: true,
+            'message': 'Book Updated Successfully'
+        })
+    } catch (error) {
+        res.status(400).send({
+            success: false,
+            'message': error
+        })
+    }
+})
+
+// Delete Book Route
+router.delete('/:id', async(req, res) => {
+    let book
+    try {
+        book = await Book.findById(req.params.id)
+        await book.remove()
+        res.status(200).send({
+            success: true,
+            'message': 'Book deleted successfully'
+        })
+    } catch (error) {
+        res.status(400).send({
+            success: true,
+            'message': error
+        })
+    }
 })
 
 function convertToBase64() {
