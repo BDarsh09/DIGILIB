@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http'
 import { Observable, of, throwError } from 'rxjs';
-import {catchError, switchMap} from 'rxjs/operators'
+import {catchError, map, switchMap} from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -11,18 +11,14 @@ export class AuthorsService {
   constructor(public http: HttpClient) { }
 
   public getAuthors(): Observable<any> {
-    if (this.authors.length) {
-      return of(this.authors)
-    } else {
-      return this.http.get('api/authors').pipe(switchMap((response: any) => {
-        if (response) {
-          this.authors = this.base64ToJson(response.data)
-          return of(this.authors)
-        }
-      }), catchError((error) => {
-        return throwError(error)
-      }));
-    }
+    return this.http.get('api/authors').pipe(switchMap((response: any) => {
+      if (response) {
+        this.authors = this.base64ToJson(response.data)
+        return of(this.authors)
+      }
+    }), catchError((error) => {
+      return throwError(error)
+    }));
   }
 
   public addAuthor(authorName): Observable<any> {
@@ -34,6 +30,34 @@ export class AuthorsService {
       if (response) {
         return of(response)
       }
+    }), catchError((error) => {
+      return throwError(error)
+    }))
+  }
+
+  public selectAuthor(authorId): Observable<any> {
+    return this.http.get(`api/authors/${authorId}`).pipe(switchMap((response) => {
+      return of(response)
+    }), catchError((error) => {
+      return throwError(error)
+    })) 
+  }
+
+  public updateAuthor(author): Observable<any> {
+    let sendJSON: any = {}
+    if (author.name) {
+      sendJSON.authorName = author.name
+    }
+    return this.http.put(`api/authors/${author._id}`, sendJSON).pipe(switchMap((response) => {
+      return of(response)
+    }), catchError((error) => {
+      return throwError(error)
+    }))
+  }
+
+  public deleteAuthor(authorId): Observable<any> {
+    return this.http.delete(`api/authors/${authorId}`).pipe(switchMap((response) => {
+      return of(response)
     }), catchError((error) => {
       return throwError(error)
     }))

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule} from '@angular/common/http'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { AuthorsComponent } from './authors/authors.component';
@@ -12,6 +13,8 @@ import { AddAuthorComponent } from './add-author/add-author.component';
 import { BooksComponent } from './books/books.component';
 import { SelectBookComponent } from './select-book/select-book.component';
 import { SelectAuthorComponent } from './select-author/select-author.component';
+import { DatePipe } from '@angular/common';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -28,9 +31,11 @@ import { SelectAuthorComponent } from './select-author/select-author.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

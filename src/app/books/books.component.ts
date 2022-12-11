@@ -16,6 +16,17 @@ export class BooksComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBooks()
+    // this.books = [
+    //   {
+    //     "id": "6370f8f11fe870d32872fb0c",
+    //     "title": "Power of Subconscious Mind",
+    //     "description": "Here is the complete, original text of the millions-selling self- help guide that reveals your invisible power to attain any goal-paired with a compelling bonus work, How to Attract Money.",
+    //     "publishedDate": '16-06-1978',
+    //     "pageCount": 312,
+    //     "bookCover": "https://m.media-amazon.com/images/I/71sBtM3Yi5L.jpg",
+    //     "author": "Joseph Murphy"
+    //   }
+    // ]
   }
 
   getBooks() {
@@ -26,9 +37,6 @@ export class BooksComponent implements OnInit {
 
   selectBook(bookId) {
     this.router.navigate(['/books', bookId])
-    // this.bookService.selectBook(bookId).pipe(take(1)).subscribe((selectedBook) => {
-    //   console.log(selectedBook)
-    // })
   }
 
 }

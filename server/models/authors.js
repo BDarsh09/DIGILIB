@@ -9,11 +9,11 @@ const authorSchema = new mongoose.Schema({
     
 })
 
-authorSchema.pre('remove', function(next) {
-    Book.find({ author: this.id }, (error, books) => {
+authorSchema.pre('remove', function preRemove(next) {  
+    Book.find({ author: this._id }, (error, books) => {
         if (error) {
             next(error)
-        } else if (books) {
+        } else if (books.length > 0) {
             next(new Error('This author still has books'))
         } else {
             next()

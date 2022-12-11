@@ -1,1 +1,15 @@
-<p>select-author works!</p>
+<div class="container">
+    <div class="row mt-5">
+        <h1 class="text-center">{{authorName}}</h1>
+    </div>
+    <div class="row mt-5" *ngIf="books.length > 0">
+        <ng-container *ngFor="let book of books">
+            <div class="col-md-3 col-sm-6 mt-4 cursor-pointer">
+                <img height="200" width="200" [src]="book.bookCover" alt="" (click)="selectBook(book.id)">
+            </div>
+        </ng-container>
+    </div>
+    <div class="row mt-5" *ngIf="books.length === 0">
+        <h3 class="text-center">No Books Available</h3>
+    </div>
+</div>

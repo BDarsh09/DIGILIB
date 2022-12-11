@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 // Create Books Route
 router.post('/', async (req, res) => {
     // const fileName = req.file != null ? req.file.filename : null    
-    const bookAuthor = await Author.findOne({ 'name': req.body.author })
+    const bookAuthor = await Author.findOne({ 'name': req.body.authorName })
     const book = new Book({
         title: req.body.title,
         author: bookAuthor,
@@ -37,9 +37,9 @@ router.post('/', async (req, res) => {
         await book.save()
         res.status(200).send(book)
     } catch (error) {
-        if (book.coverImageName !== null) {
-            removeBookCover(book.coverImageName)
-        }
+        // if (book.coverImageName !== null) {
+        //     removeBookCover(book.coverImageName)
+        // }
         res.status(400).send(error)
     }
 })
@@ -59,7 +59,7 @@ router.put('/:id', async(req, res) => {
     let book
     try {
         book = await Book.findById(req.params.id)
-        const bookAuthor = await Author.findOne({ 'name': req.body.author })
+        const bookAuthor = await Author.findOne({ 'name': req.body.author.name })
         book.title = req.body.title,
         book.author = bookAuthor
         book.publishedDate = new Date(req.body.publishedDate),
@@ -112,3 +112,4 @@ function removeBookCover() {
 }
 
 module.exports = router
+

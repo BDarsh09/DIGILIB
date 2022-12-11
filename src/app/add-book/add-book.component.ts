@@ -1,3 +1,6 @@
+import { ToastrService } from 'ngx-toastr';
+import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { BooksService } from './../services/books.service';
 import { take } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
@@ -12,18 +15,32 @@ import _ from 'lodash'
 })
 export class AddBookComponent implements OnInit {
 
-  public title: string = ''
-  public publishedDate: Date
-  public pageCount: Number
   public authorName: String = ''
-  public description: String = ''
   public authors:any = []
-  public fileName:any = ''
-  public bookCover:String = ''
-  // private formData:any
-  constructor(private authorService: AuthorsService, private bookService: BooksService) { }
+  public book:any = {}
+  public editBook:boolean = false
+  
+  constructor(private authorService: AuthorsService, 
+    private bookService: BooksService, 
+    private router: Router, 
+    public datePipe: DatePipe, 
+    private toastrService: ToastrService) 
+    { 
+      if (this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state){
+        this.book = _.cloneDeep(this.router.getCurrentNavigation().extras.state.book)
+        this.book.publishedDate = this.datePipe.transform(this.book.publishedDate, 'yyyy-MM-dd')
+        this.editBook = true
+      }
+    }
 
   ngOnInit(): void {
+    // this.authors = [{
+    //     name: 'Joseph Murphy'
+    //   }, {
+    //     name: 'Darshil Bavishi'
+    //   }, {
+    //     name: 'Maitree Bavishi'
+    //   }]
     this.getAuthors()
   }
 
@@ -34,29 +51,47 @@ export class AddBookComponent implements OnInit {
   }
 
   onSubmit(bookData: NgForm) {
-    let sendJSON:any = {
-      'title': this.title,
-      'publishedDate': this.publishedDate,
-      'pageCount': this.pageCount,
-      'author': this.authorName,
-      'description': this.description,
-      'bookCover': this.bookCover
-    }
     // Object.entries(sendJSON).map(([key, value]) =>
     //   this.formData.append(key, value)
     // );
     // for (var pair of this.formData.entries()) {
     //   console.log(pair[0] + ', ' + pair[1]);
     // }
-    this.bookService.addBook(sendJSON).pipe(take(1)).subscribe((response) => {
-      if (response) {
-        console.log(response)
-      }
-    })
+    if(this.editBook === true && this.book && this.book.id) {
+      this.bookService.updateBook(this.book).pipe(take(1)).subscribe((response) => {
+        if (response) {
+          this.toastrService.info(response.message, '', {
+            timeOut: 3000,
+            progressBar: true,
+            progressAnimation: 'decreasing',
+            positionClass: 'toast-bottom-left'
+          });
+          this.router.navigate(['/books'])
+        }
+      })
+    }else {
+      this.bookService.addBook(this.book).pipe(take(1)).subscribe((response) => {
+        if (response) {
+          this.toastrService.info(response.message, '', {
+            timeOut: 3000,
+            progressBar: true,
+            progressAnimation: 'decreasing',
+            positionClass: 'toast-bottom-left'
+          });
+          this.router.navigate(['/books'])
+        }
+      })
+    }
+    console.log(this.book)
   }
 
   onChangeAuthor(author) {
-    this.authorName = author.target.value
+    this.book.authorName = author.target.value
+  }
+
+  onDismiss() {
+    this.book = {}
+    this.editBook = false
   }
 
   // onFileSelected(event) {

@@ -49,7 +49,7 @@ router.put('/:id', async (req, res) => {
     let author
     try {
         author = await Author.findById(req.params.id)
-        author.name = req.body.name
+        author.name = req.body.authorName
         await author.save()
         res.status(200).send({ 
             success: true, 

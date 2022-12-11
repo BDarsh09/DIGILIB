@@ -1,1 +1,26 @@
-<p>select-book works!</p>
+<div class="container" *ngIf="book">
+    <div class="row title-margin">
+        <h1 class="text-center">{{book.title}}</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-4 font20">
+            <div>Author: {{book.author.name}}</div>
+            <div>Published Date: {{book.publishedDate | date:'mediumDate'}}</div>
+            <div>Page Count: {{book.pageCount}}</div>
+            <div class="mt-3">Description: {{book.description}}</div>
+            <div class="my-4 d-flex flex-row justify-content-around align-items-center">
+                <button class="btn btn-info px-5"><i class="bi bi-download" (click)="downloadBook()"></i></button>
+                <button class="btn btn-success px-5" (click)="editBook()"><i class="bi bi-pencil-square"></i></button>
+                <button class="btn btn-danger px-5" (click)="deleteBook()"><i class="bi bi-trash"></i></button>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+            <div class="cursor-pointer">
+                <img height="300" width="300" [src]="book.bookCover" alt="">
+            </div>
+        </div>
+    </div>
+    
+</div>

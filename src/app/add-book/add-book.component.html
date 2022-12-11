@@ -5,11 +5,11 @@
             <div class="col-5">
                 <div class="form-group">
                     <label class="my-2">Title</label>
-                    <input type="text" name="title" class="form-control" [(ngModel)]="title" required>
+                    <input type="text" name="title" class="form-control" [(ngModel)]="book.title" required>
                 </div>
                 <div class="form-group">
                     <label class="my-2">Published Date</label>
-                    <input type="date" name="title" class="form-control" [(ngModel)]="publishedDate" required>
+                    <input type="date" name="title" class="form-control" [(ngModel)]="book.publishedDate" required>
                 </div>
                 <!-- <div class="form-group">
                     <label class="my-2">Book Cover</label>
@@ -23,10 +23,10 @@
                 </div> -->
                 <div class="form-group">
                     <label class="my-2">Book Cover</label>
-                    <input type="text" name="bookCover" class="form-control" [(ngModel)]="bookCover" required>
+                    <input type="text" name="bookCover" class="form-control" [(ngModel)]="book.bookCover" required>
                 </div>
                 <div class="mt-4">
-                    <img *ngIf="bookCover" height="200" width="200" [src]="bookCover" alt="">
+                    <img *ngIf="book.bookCover" height="200" width="200" [src]="book.bookCover" alt="">
                 </div>
             </div>
             <div class="col-5">
@@ -38,19 +38,19 @@
                 </div>
                 <div class="form-group">
                     <label class="my-2">Page Count</label>
-                    <input type="number" name="pageCount" class="form-control" [(ngModel)]="pageCount" required>
+                    <input type="number" name="pageCount" class="form-control" [(ngModel)]="book.pageCount" required>
                 </div>
                 <div class="form-group">
                     <label class="my-2">Description</label>
-                    <textarea class="form-control" name="description" [(ngModel)]="description" rows="3"></textarea>
+                    <textarea class="form-control" name="description" [(ngModel)]="book.description" rows="3"></textarea>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-1"></div>
             <div class="col-5">
-                <button class="btn btn-success mt-3 me-3" (click)="onSubmit(bookForm)">Submit</button>
-                <button class="btn btn-info mt-3">Cancel</button>
+                <button class="btn btn-success mt-3 me-3" (click)="onSubmit(bookForm)" [disabled]="bookForm.invalid">{{editBook === true ? 'Update' : 'Submit'}}</button>
+                <button class="btn btn-info mt-3" (click)="onDismiss()">Cancel</button>
             </div>
         </div>
     </form>

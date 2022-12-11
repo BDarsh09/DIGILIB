@@ -8,6 +8,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BooksComponent } from './books/books.component';
 
 const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'books'},
   { path: 'authors', component: AuthorsComponent }, 
   { path: 'authors/:id', component: SelectAuthorComponent },
   { path: 'addAuthor', component: AddAuthorComponent },
