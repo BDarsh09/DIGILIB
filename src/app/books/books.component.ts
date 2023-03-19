@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class BooksComponent implements OnInit {
   public books:any = []
   public searchText:any = ''
+  public spinnerEnabled: boolean = false
   constructor(private bookService: BooksService, private router: Router) { }
 
   ngOnInit(): void {
@@ -30,7 +31,9 @@ export class BooksComponent implements OnInit {
   }
 
   getBooks() {
+    this.spinnerEnabled = true
     this.bookService.getBooks().pipe(take(1)).subscribe((booksData) => {
+      this.spinnerEnabled = false
       this.books = _.cloneDeep(booksData)
     })
   }

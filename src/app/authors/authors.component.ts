@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class AuthorsComponent implements OnInit {
   public authors:any;
   public searchText: string = '';
+  public spinnerEnabled:boolean = false
   constructor(private authorService: AuthorsService, private router: Router, private toastrService: ToastrService) { 
     
   }
@@ -34,7 +35,9 @@ export class AuthorsComponent implements OnInit {
   }
 
   getAuthors() {
+    this.spinnerEnabled = true
     this.authorService.getAuthors().pipe(take(1)).subscribe((authorsData) => {
+      this.spinnerEnabled = false
       this.authors = _.cloneDeep(authorsData)
     })
   }

@@ -4,12 +4,16 @@
             <div class="col-1"></div>
             <div class="col-5">
                 <div class="form-group">
-                    <label class="my-2">Title</label>
-                    <input type="text" name="title" class="form-control" [(ngModel)]="book.title" required>
+                    <label class="my-2">Title*</label>
+                    <input type="text" name="title" #title="ngModel" class="form-control" [(ngModel)]="book.title" pattern="^[a-zA-Z0-9_ ]+$" required>
+                    <span class="text-light" *ngIf="title.touched && title.errors">
+                        <span *ngIf="title.errors.required">This is required</span>
+                        <span *ngIf="title.errors.pattern">Please enter valid details</span>
+                    </span>
                 </div>
                 <div class="form-group">
-                    <label class="my-2">Published Date</label>
-                    <input type="date" name="title" class="form-control" [(ngModel)]="book.publishedDate" required>
+                    <label class="my-2">Published Date*</label>
+                    <input type="date" name="publishedDate" class="form-control" [(ngModel)]="book.publishedDate" required>
                 </div>
                 <!-- <div class="form-group">
                     <label class="my-2">Book Cover</label>
@@ -22,8 +26,11 @@
                     </div>
                 </div> -->
                 <div class="form-group">
-                    <label class="my-2">Book Cover</label>
-                    <input type="text" name="bookCover" class="form-control" [(ngModel)]="book.bookCover" required>
+                    <label class="my-2">Book Cover*</label>
+                    <input type="text" name="bookCover" #bookCover="ngModel" class="form-control" [(ngModel)]="book.bookCover" required>
+                    <span class="text-light" *ngIf="bookCover.touched && bookCover.errors">
+                        <span *ngIf="bookCover.errors.required">This is required</span>
+                    </span>
                 </div>
                 <div class="mt-4">
                     <img *ngIf="book.bookCover" height="200" width="200" [src]="book.bookCover" alt="">
@@ -31,14 +38,18 @@
             </div>
             <div class="col-5">
                 <div class="form-group">
-                    <label class="my-2">Author</label>
+                    <label class="my-2">Author*</label>
                     <select name="author" class="form-control" (change)="onChangeAuthor($event)">
                         <option *ngFor="let author of authors" [value]="author.name">{{author.name}}</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="my-2">Page Count</label>
-                    <input type="number" name="pageCount" class="form-control" [(ngModel)]="book.pageCount" required>
+                    <label class="my-2">Page Count*</label>
+                    <input type="number" name="pageCount" #pageCount="ngModel" class="form-control" [(ngModel)]="book.pageCount" pattern="^[0-9]+$" required>
+                    <span class="text-light" *ngIf="pageCount.touched && pageCount.errors">
+                        <span *ngIf="pageCount.errors.required">This is required</span>
+                        <span *ngIf="pageCount.errors.pattern">Please enter valid details</span>
+                    </span>
                 </div>
                 <div class="form-group">
                     <label class="my-2">Description</label>

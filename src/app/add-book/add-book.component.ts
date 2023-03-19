@@ -19,6 +19,7 @@ export class AddBookComponent implements OnInit {
   public authors:any = []
   public book:any = {}
   public editBook:boolean = false
+  public buttonDisabled:boolean = false
   
   constructor(private authorService: AuthorsService, 
     private bookService: BooksService, 
@@ -51,15 +52,11 @@ export class AddBookComponent implements OnInit {
   }
 
   onSubmit(bookData: NgForm) {
-    // Object.entries(sendJSON).map(([key, value]) =>
-    //   this.formData.append(key, value)
-    // );
-    // for (var pair of this.formData.entries()) {
-    //   console.log(pair[0] + ', ' + pair[1]);
-    // }
+    this.buttonDisabled = true
     if(this.editBook === true && this.book && this.book.id) {
       this.bookService.updateBook(this.book).pipe(take(1)).subscribe((response) => {
         if (response) {
+          this.buttonDisabled = false
           this.toastrService.info(response.message, '', {
             timeOut: 3000,
             progressBar: true,
@@ -72,6 +69,7 @@ export class AddBookComponent implements OnInit {
     }else {
       this.bookService.addBook(this.book).pipe(take(1)).subscribe((response) => {
         if (response) {
+          this.buttonDisabled = false
           this.toastrService.info(response.message, '', {
             timeOut: 3000,
             progressBar: true,

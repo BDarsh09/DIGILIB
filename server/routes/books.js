@@ -35,7 +35,10 @@ router.post('/', async (req, res) => {
     })
     try {
         await book.save()
-        res.status(200).send(book)
+        res.status(200).send({
+            success: true,
+            message: 'Book saved successfully'
+        })
     } catch (error) {
         // if (book.coverImageName !== null) {
         //     removeBookCover(book.coverImageName)

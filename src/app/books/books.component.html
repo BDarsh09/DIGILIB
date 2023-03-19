@@ -8,6 +8,7 @@
         </div>
     </div>
     <div class="row">
+        <app-spinner *ngIf="spinnerEnabled"></app-spinner>
         <ng-container *ngFor="let book of books | filter: searchText">
             <div class="col-md-3 col-sm-6 mt-4 cursor-pointer">
                 <img height="200" width="200" [src]="book.bookCover" alt="" (click)="selectBook(book.id)">

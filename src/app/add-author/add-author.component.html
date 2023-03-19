@@ -3,13 +3,17 @@
         <div class="row">
             <div class="col-6">
                 <div class="form-group">
-                    <label class="my-2">Author Name</label>
-                    <input type="text" name="authorName" class="form-control" [(ngModel)]="authorName" (ngModelChange)="onValidate()" required>
+                    <label class="my-2">Author Name*</label>
+                    <input type="text" #author="ngModel" name="authorName" class="form-control" [(ngModel)]="authorName" pattern="^[a-zA-Z ]+$" (ngModelChange)="onValidate()" required>
+                    <span class="text-light" *ngIf="author.touched && author.errors">
+                        <span *ngIf="author.errors.required">This is required</span>
+                        <span *ngIf="author.errors.pattern">Please enter valid details</span>
+                    </span>
                 </div>
             </div>
-            <div class="col-3 d-flex flex-row justify-content-start align-items-end">
+            <div class="col-3 margin-top">
                 <div class="form-group">
-                    <button class="btn btn-success">{{editAuthor === true ? 'Update' : 'Submit'}}</button>
+                    <button class="btn btn-success" [disabled]="authorForm.invalid || buttonDisabled">{{editAuthor === true ? 'Update' : 'Submit'}}</button>
                 </div>
             </div>
         </div>

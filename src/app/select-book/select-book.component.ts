@@ -14,12 +14,15 @@ export class SelectBookComponent implements OnInit {
   
   public book:any
   private bookId: string = ''
+  public spinnerEnabled:boolean = false
   constructor(private router: Router, private route: ActivatedRoute, private bookService: BooksService, private toastrService: ToastrService) { }
 
   ngOnInit(): void {
     this.bookId = this.route.snapshot.paramMap.get('id')
+    this.spinnerEnabled = true
     this.bookService.selectBook(this.bookId).pipe(take(1)).subscribe((bookData) => {
       if (bookData) {
+        this.spinnerEnabled = false
         this.book = _.cloneDeep(bookData)
       }
     }) 

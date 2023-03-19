@@ -15,6 +15,7 @@ import { SelectBookComponent } from './select-book/select-book.component';
 import { SelectAuthorComponent } from './select-author/select-author.component';
 import { DatePipe } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ToastrModule } from 'ngx-toastr';
     AddAuthorComponent,
     BooksComponent,
     SelectBookComponent,
-    SelectAuthorComponent
+    SelectAuthorComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

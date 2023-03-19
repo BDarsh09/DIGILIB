@@ -12,11 +12,14 @@ export class SelectAuthorComponent implements OnInit {
   public authorName:string = ''
   public books:Array<any> = []
   private authorId: string = ''
+  public spinnerEnabled:boolean = false
   constructor(private authorService: AuthorsService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.authorId = this.route.snapshot.paramMap.get('id')
+    this.spinnerEnabled = true
     this.authorService.selectAuthor(this.authorId).pipe(take(1)).subscribe((selectedAuthor) => {
+      this.spinnerEnabled = false
       this.authorName = _.cloneDeep(selectedAuthor.author)
       this.books = _.cloneDeep(selectedAuthor.books)
     })

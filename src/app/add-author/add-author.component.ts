@@ -16,6 +16,7 @@ export class AddAuthorComponent implements OnInit {
   public authorName:string = ''
   public author:any = {}
   public editAuthor:boolean = false
+  public buttonDisabled:boolean = false
   constructor(public authorService: AuthorsService, public router: Router, public toastrService: ToastrService) { 
     if (this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.author) {
       this.author = _.cloneDeep(this.router.getCurrentNavigation().extras.state.author)
@@ -32,10 +33,12 @@ export class AddAuthorComponent implements OnInit {
   }
 
   onSubmit(authorData: NgForm){
+    this.buttonDisabled = true
     if (this.editAuthor === true && this.author && this.author._id) {
       this.author.name = _.cloneDeep(this.authorName)
       this.authorService.updateAuthor(this.author).pipe(take(1)).subscribe((response) => {
         if (response) {
+          this.buttonDisabled = false
           this.toastrService.info(response.message, '', {
             timeOut: 3000,
             progressBar: true,
@@ -48,6 +51,7 @@ export class AddAuthorComponent implements OnInit {
     } else {
       this.authorService.addAuthor(this.authorName).pipe(take(1)).subscribe((response) => {
         if (response) {
+          this.buttonDisabled = false
           this.toastrService.info(response.message, '', {
             timeOut: 3000,
             progressBar: true,

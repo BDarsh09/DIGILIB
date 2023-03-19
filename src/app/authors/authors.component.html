@@ -8,6 +8,7 @@
         </div>
     </div>
     <div class="row">
+        <app-spinner *ngIf="spinnerEnabled"></app-spinner>
         <ng-container *ngFor="let author of authors | filter: searchText">
             <div class="col-3"></div>
             <div class="col-md-2">
